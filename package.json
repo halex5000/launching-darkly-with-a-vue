@@ -2,16 +2,24 @@
   "name": "vuejs-with-vite",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "serve": "vite preview",
     "build": "vite build",
-    "preview": "vite preview --port 4173"
+    "dev": "vite",
+    "preview": "vite preview --port 4173",
+    "start": "vite"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "launchdarkly-vue-client-sdk": "^1.0.0",
-    "vue": "^3.2.37"
+    "roboto-fontface": "*",
+    "vue": "^3.2.37",
+    "vuetify": "^3.0.0-beta.0",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
-    "vite": "^3.0.1"
+    "vite": "^3.0.1",
+    "vite-plugin-vuetify": "^1.0.0-alpha.0",
+    "vue-cli-plugin-vuetify": "~2.5.1"
   }
 }

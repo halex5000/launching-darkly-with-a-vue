@@ -2,7 +2,6 @@
   import HelloWorld from './components/HelloWorld.vue'
   import { ref, provide } from 'vue'
   import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk'
-import DebugPanel from './components/DebugPanel.vue'
   let msg = "You did it... sort of";
   let ldReady = false;
   let showExperimentalLogo = ref(false);
