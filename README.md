@@ -123,9 +123,17 @@ Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app
 From here, we can enable our new feature and observe how our application changes based on a new feature being rolled out. 
 
 * `login`
-  - Enable this feature first.
-  - Your UI should update to include a login screen.
-  - We can use this login screen to configure `Targeting Rules` within LaunchDarkly to target feature releases at specific users. 
+  - Enable this feature
+    - click here to see how
+    - You should now have a login field
+    - Enter any name you want here and you should see the screen update to tell you who you have logged in as.
+    - We'll use this feature to allow for specific user targeting
+  - :information_desk_person: you just popped your first flag and saw a nearly instantaneous change in the UI :boom: thanks to the combined power of the reactive nature of Vue and the LaunchDarkly's global super powered Flag Delivery Network (FDN)
 * `new-ui`
   - Create a `targeting rule` for your user, for this feature flag.
+    - click here to see how
   - Ensure you set the `Default Rule` to false to ensure that only users who are targeted receive feature changes.
+    - click here to see how
+  - You should now see the new UI for your user, but let's see what it looks like for another user
+    - enter a new username and click login again
+    - your LaunchDarkly logo should update because you no longer get served the new UI feature

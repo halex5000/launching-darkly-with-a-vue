@@ -1,30 +1,46 @@
 <script setup>
   import HelloWorld from './components/HelloWorld.vue'
-
-  import { useLDReady } from 'launchdarkly-vue-client-sdk'
+  import { ref, provide } from 'vue'
+  import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk'
+import DebugPanel from './components/DebugPanel.vue'
   let msg = "You did it... sort of";
-  let imgPath = "./logo.svg";
   let ldReady = false;
+  let showExperimentalLogo = ref(false);
+  let height = ref(300);
+  let width = ref(300);
+
+  const imgPath = (showExperimentalLogo) => {
+    if (ldReady) {
+      if (showExperimentalLogo) {
+        return "./toggle.png";
+      }
+      return "./white-osmo.png";
+    }
+    return "./logo.svg";
+  }
+  
   try {
     ldReady = useLDReady();
+
+    showExperimentalLogo = useLDFlag('new-ui', false);
     msg = "You did it!!"
-    imgPath = "./white-osmo.png";
   } catch (error) {
     console.error(error);
   }
+
+  provide('showExperimentalLogo', showExperimentalLogo);
 </script>
 
 <template>
   <header>
     <!-- notice that we bound the path for the logo  to a variable which changes depending on the state of our LaunchDarkly connection-->
-    <img alt="Vue logo" class="logo" v-bind:src="imgPath" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld :msg=msg :isLDReady=ldReady />
-    </div>
+    <img alt="Vue logo" class="logo" v-bind:src="imgPath(showExperimentalLogo)" v-bind:width="width" v-bind:height="height" />
   </header>
 
   <main>
+    <div class="wrapper">
+      <HelloWorld :msg=msg :isLDReady=ldReady />
+    </div>
   </main>
 </template>
 
