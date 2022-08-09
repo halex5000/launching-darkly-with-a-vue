@@ -50,7 +50,3 @@ const clearUser = async () => {
     <p>{{username === 'anonymous' ? 'You are anonymous' : `You are logged in as ${username}`}} </p>
   </div>
 </template>
-
-<style scoped>
-
-</style>
