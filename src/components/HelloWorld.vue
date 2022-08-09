@@ -1,4 +1,5 @@
 <script setup>
+import Login from './Login.vue';
 defineProps({
   msg: {
     type: String,
@@ -19,6 +20,7 @@ defineProps({
       <a target="_blank" href="https://launchdarkly.com">LaunchDarkly</a> +
       <a target="_blank" href="https://vitejs.dev/">Vite</a> +
       <a target="_blank" href="https://vuejs.org/">Vue 3</a>.
+      <Login />
     </h3>
     <h3 v-else>
       <a target="_blank" href="https://vitejs.dev/">Vite</a> +

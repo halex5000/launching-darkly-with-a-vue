@@ -16,6 +16,7 @@
 
 <template>
   <header>
+    <!-- notice that we bound the path for the logo  to a variable which changes depending on the state of our LaunchDarkly connection-->
     <img alt="Vue logo" class="logo" v-bind:src="imgPath" width="125" height="125" />
 
     <div class="wrapper">
@@ -24,7 +25,6 @@
   </header>
 
   <main>
-<!--     <TheWelcome /> -->
   </main>
 </template>
 
