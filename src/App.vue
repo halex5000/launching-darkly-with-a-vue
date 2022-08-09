@@ -1,6 +1,6 @@
 <script setup>
   import HelloWorld from './components/HelloWorld.vue'
-  import TheWelcome from './components/TheWelcome.vue'
+
   import { useLDReady } from 'launchdarkly-vue-client-sdk'
   let msg = "You did it... sort of";
   let imgPath = "./logo.svg";

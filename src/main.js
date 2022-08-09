@@ -6,9 +6,9 @@ import './assets/main.css'
 
 const app = createApp(App);
 
-if (import.meta.env.VITE_LD_CLIENT_ID) {
+if (import.meta.env.VITE_CLIENT_ID) {
     const launchDarklyPluginOptions = {
-        clientSideID: import.meta.env.VITE_LD_CLIENT_ID,
+        clientSideID: import.meta.env.VITE_CLIENT_ID,
     };
     app.use(LDPlugin, launchDarklyPluginOptions)
 }

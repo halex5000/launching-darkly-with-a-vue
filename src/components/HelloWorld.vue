@@ -14,15 +14,18 @@ defineProps({
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h2>{{isLDReady}}</h2>
-    <h3>
-      You’ve successfully created a project with <br>
-      <a hidden="!isLDReady" target="_blank" href="https://launchdarkly.com">LaunchDarkly</a> +
+    <h3>You’ve successfully created a project with <br/></h3>
+    <h3 v-if="isLDReady">
+      <a target="_blank" href="https://launchdarkly.com">LaunchDarkly</a> +
       <a target="_blank" href="https://vitejs.dev/">Vite</a> +
       <a target="_blank" href="https://vuejs.org/">Vue 3</a>.
     </h3>
-    <h3 hidden="isLDReady">
-      but LaunchDarkly isn't setup yet.
+    <h3 v-else>
+      <a target="_blank" href="https://vitejs.dev/">Vite</a> +
+      <a target="_blank" href="https://vuejs.org/">Vue 3</a>. <br/>
+      but LaunchDarkly isn't setup yet. <br/>
+      Make sure your <code>.env</code> file is setup like this:
+      <code>VITE_CLIENT_ID=62df36fed75e061473cc548e</code>
     </h3>
   </div>
 </template>

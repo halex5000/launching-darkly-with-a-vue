@@ -2,57 +2,119 @@
 
 ![](./public/osmo.png)
 
-This [Vue](https://vuejs.org/) application is designed to use several feature flags to showcase the ability to release features quickly using [LaunchDarkly](https://www.launchdarkly.com) and super power your Vue app. 
+This [Vue](https://vuejs.org/) application is designed to get you up and running with a working Vue app in no time flat and use use several feature flags to showcase the ability to release features quickly using [LaunchDarkly](https://www.launchdarkly.com) and super power your Vue app. 
+
+
+
+If you found this repo on your own, checkout this blog post to read more about the new LaunchDarkly Vue SDK!
+(TODO: insert blog post link here)
+
+
 
 ## Getting Started
 
-### **Step 1**
-Sign up for a [free trial of LaunchDarkly](https://app.launchdarkly.com/signup) to explore creating Feature Flags and targeting users with changes. It's fast, easy, and there's no obligation to continue.
+### :gear: **Setup**
 
-### **Step 2**
+If you don't already have a LaunchDarkly account, sign up for a [free trial of LaunchDarkly](https://app.launchdarkly.com/signup) to explore creating Feature Flags and targeting users with changes. It's fast, easy, and there's no obligation to continue.
+
+
+
+### :flags: **Creating flags**
+
 Create the following feature flags within LaunchDarkly
 
 * `login`
+  
   - Create this flag as a `boolean` flag 
   - This feature flag will be used to enable the login UI that can be used to leverage targeting based on a user ID. 
-  <details><summary>Click here to see how</summary>
-  	
-    ![](./public/create-login-flag.gif)
-  </details>
-
+    <details><summary>Click here to see how</summary>
+    
+      ![](./public/create-login-flag.gif)
+    </details>
+  
 * `new-ui`
   - Create this flag as a `boolean` flag
   - This feature flag changes the view of the application out of the Osmo logo, introducing a new banner, image, and text.
     <details><summary>Click here to see how</summary>
   	
     ![](./public/create-new-ui-flag.gif)
-  </details>
+    </details>
 
-### **Step 3**
+### :zipper_mouth_face: **Secret time**
+
 Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app.launchdarkly.com/)
 
 - :sunglasses:  Super cool way 
   -  `CMD+K` or `CTRL+K`, typing "copy" and selecting `Copy SDK key for the current environment` and selecting **"Client-side ID"** from the list. 
 
   <details><summary>Click here to see how</summary>
-  	
-   ![](./public/retrieve-client-id.gif)
+
+   ![](./public/retrieve-client-id-without-save.gif)
   </details>
+
 - :hand: Manual way 
   - You can find the Client-Side ID under `Account Settings > Projects > <Your Project Name>`
   - Click your project name
   - Click the `Client-side ID` for the key you want
+    (This will add it to your clipboard for easy copy and paste.)
 
-This will add it to your clipboard for easy copy and paste. 
+- **:warning: Potential gotcha**: 
+  make sure you got the **"Client-side ID"** from the LaunchDarkly console and not one of the other keys! 
 
+### **Step 4** :ship: with :flags:
 
-### **Step 4**
-Create a secret in Replit (the lock screen on the left side of your editor) where the key is <br>
-`VITE_LD_CLIENT_ID` and the value is your **Client-side ID** <br>
-(it's in your clipboard if you did this the cool way :wink: or if you clicked the ID in the LaunchDarkly console)
+:world_map: Choose your own adventure
 
-**:warning: Potential gotcha**: make sure you got the **"Client-side ID"** from the LaunchDarkly console and not one of the other keys! 
+1. Run locally
+   <details><summary>Click here to see how</summary>
 
+   1. Get the code
+
+      ```shell
+      # just run this command to quickly pull the source code locally
+      # you have to have Node and NPM installed already, but you probably already do if you work with Vue
+      npx degit halex5000/launching-darkly-with-a-vue
+      ```
+   2. Setup the env
+
+      ```shell
+      # go into the directory you just created by pulling the code
+      cd launching-darkly-with-a-vue
+      
+      # this will make the terminal wait for your client ID to be pasted 
+      read client_id
+      
+      # paste your client ID into the terminal and hit enter
+      
+      # this will write your client ID to your .env file, which is ignored by the .gitignore
+      echo "VITE_CLIENT_ID=$client_id" > .env                                                                                  
+      ```
+   3. Install all the things
+      ```shell
+      npm install
+      ```
+   4. Run your app!
+      ```shell
+      # this will set you up for hot reloading so as you change things, the app will auto-update
+      npm start
+      ```
+      </details>
+      
+
+2. Run in replit
+   <details><summary>Click here to see how</summary>
+
+   1. Go check out this Repl I made: https://replit.com/@halex5000/Launching-Darkly-with-a-Vue
+   2. Fork it.
+   3. Add a secret into your Repl `VITE_CLIENT_ID` and paste the Client Side ID you copied from the LaunchDarkly console
+      <details><summary>Click here to see how</summary>
+
+        ![](./public/save-client-id.gif)
+      
+      </details>
+
+   4. Run your Repl!
+   </details>
 
 ## :champagne: Let's pop some flags :champagne:
 
