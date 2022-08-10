@@ -8,6 +8,7 @@
     timelineIcon: String,
     icon: String,
     error: String,
+    size: String
   })
   let overlay = ref(false);
 </script>
