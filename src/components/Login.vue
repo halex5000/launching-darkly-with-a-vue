@@ -49,7 +49,7 @@ const clearUser = async () => {
 
 <template>
   <v-card
-    class="overflow-auto mx-auto"
+    class="overflow-auto mx-auto d-sm-none d-md-flex d-lg-flex d-xl-flex"
     v-show="loginEnabled"
   >
     <v-banner

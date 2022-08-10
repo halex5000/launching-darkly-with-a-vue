@@ -14,18 +14,16 @@
   } catch (error) {
     console.error(error);
   }
-  
-
 </script>
 
 <template>
 
 <v-app>
-  <v-navigation-drawer v-if="newLogoEnabled" color="grey-darken-2" width="550" image="./toggle.png">
+  <v-navigation-drawer class="d-sm-none d-lg-flex d-md-flex d-xl-flex" v-if="newLogoEnabled" color="grey-darken-2" width="550" image="./toggle.png">
   </v-navigation-drawer>
-  <v-navigation-drawer  v-if="!newLogoEnabled" color="grey-darken-2" permanent>
+  <v-navigation-drawer class="d-sm-none d-lg-flex d-md-flex d-xl-flex"  v-if="!newLogoEnabled" color="grey-darken-2">
   </v-navigation-drawer>
-  <v-navigation-drawer  v-if="!newLogoEnabled" color="grey-darken-2" location="right" permanent>
+  <v-navigation-drawer  v-if="!newLogoEnabled" class="d-sm-none d-lg-flex d-md-flex d-xl-flex" color="grey-darken-2" location="right">
   </v-navigation-drawer>
   
   <v-app-bar app>
@@ -34,7 +32,14 @@
     </div>
   </v-app-bar>
 
-  <v-main app>
+  <v-main app class="w-100">
+    <v-container fluid class="d-none d-flex d-sm-flex d-md-none d-lg-none d-xl-none">
+      <div class="w-100">
+        <v-alert type="warning">Sorry, this won't really work in a viewport this small</v-alert>
+        <br>
+        <v-alert type="info">Resize or open in a new tab and you should be all set!</v-alert>
+      </div>
+    </v-container>
     <v-container fluid>
       <Login v-if="ldReady" />
       <v-progress-linear
@@ -96,10 +101,9 @@
           />
       </v-timeline>
     </v-container>
-
   </v-main>
 
-  <v-footer app>
+  <v-footer app class="d-sm-none">
     <div class="d-flex justify-center align-center w-100">
       Launching Darkly with a Vue Footer
     </div>
