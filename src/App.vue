@@ -4,8 +4,8 @@
   import TimeLineItem from './components/TimeLineItem.vue';
   import Login from './components/Login.vue';
   let ldReady = ref(false);
-  let loginEnabled;
-  let newLogoEnabled;
+  let loginEnabled = ref(false);
+  let newLogoEnabled = ref(false);
   
   try {
     ldReady = useLDReady();
@@ -36,7 +36,7 @@
 
   <v-main app>
     <v-container fluid>
-      <Login :v-if="ldReady" />
+      <Login v-if="ldReady" />
       <v-progress-linear
         class="d-flex justify-center align-center w-100"
         v-if="newLogoEnabled"
@@ -77,7 +77,7 @@
             image="./white-osmo.png"
             dot-color="#FF386B"
             :icon="ldReady ? '' : mdi-emoticon-sad"
-            :error="!ldReady ? `LaunchDarkly initialization failed` : ''"
+            :error="!ldReady ? `LaunchDarkly initialization failed, check your environment` : ''"
             :timelineIcon="ldReady ? 'mdi-checkbox-marked-circle' : 'mdi-alert-octagram'"
           />
           <TimeLineItem 

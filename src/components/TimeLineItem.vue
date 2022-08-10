@@ -1,5 +1,4 @@
 <script setup>
-  import { ref } from 'vue'
   defineProps({
     title: String,
     subtitle: String,
@@ -10,7 +9,6 @@
     error: String,
     size: String
   })
-  let overlay = ref(false);
 </script>
 
 <template>
