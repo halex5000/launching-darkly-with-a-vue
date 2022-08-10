@@ -88,7 +88,7 @@ Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app
       ```shell
       # just run this command to quickly pull the source code locally
       # you have to have Node and NPM installed already, but you probably already do if you work with Vue
-      npx degit halex5000/launching-darkly-with-a-vue
+      npx degit halex5000/launching-darkly-with-a-vue launching-darkly-with-a-vue
       ```
 
    2. Setup the env
