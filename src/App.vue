@@ -2,13 +2,13 @@
   import { ref } from 'vue'
   import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk'
   import TimeLineItem from './components/TimeLineItem.vue';
+import Login from './components/Login.vue';
   let msg = "You did it... sort of";
   let ldReady = false;
   let showExperimentalLogo = ref(false);
   
   try {
     ldReady = useLDReady();
-
     showExperimentalLogo = useLDFlag('new-ui', false);
     msg = "You did it!!"
   } catch (error) {
@@ -30,24 +30,28 @@
 
   <v-main app>
     <v-container fluid>
+      <Login />
       <v-timeline>
-          <TimeLineItem 
-            title="Vite"
-            subtitle="Successfully built your app!"
-            image="https://vitejs.dev/logo.svg"
-            dot-color="#405BFF"
-          />
-          <TimeLineItem 
-            title="Vue 3"
-            subtitle="Is running your app!"
-            image="./logo.svg"
-            dot-color="#EBFF38"
-          />
           <TimeLineItem 
             title="LaunchDarkly"
             subtitle="Is super-powering your features!"
             image="./white-osmo.png"
             dot-color="#FF386B"
+            icon="mdi-checkbox-marked-circle"
+          />
+          <TimeLineItem 
+            title="Vue 3"
+            subtitle="Is running your app!"
+            image="./logo.svg"
+            dot-color="#A34FDE"
+            icon="mdi-checkbox-marked-circle"
+          />
+          <TimeLineItem 
+            title="Vite"
+            subtitle="Successfully built your app!"
+            image="https://vitejs.dev/logo.svg"
+            dot-color="#405BFF"
+            icon="mdi-checkbox-marked-circle"
           />
       </v-timeline>
     </v-container>
