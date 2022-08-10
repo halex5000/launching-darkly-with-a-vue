@@ -2,18 +2,19 @@
   import { ref } from 'vue'
   import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk'
   import TimeLineItem from './components/TimeLineItem.vue';
-import Login from './components/Login.vue';
-  let msg = "You did it... sort of";
-  let ldReady = false;
-  let showExperimentalLogo = ref(false);
+  import Login from './components/Login.vue';
+  let ldReady = ref(false);
+  let loginEnabled;
+  let newLogoEnabled;
   
   try {
     ldReady = useLDReady();
-    showExperimentalLogo = useLDFlag('new-ui', false);
-    msg = "You did it!!"
+    loginEnabled = useLDFlag('login', false);
+    newLogoEnabled = useLDFlag('new-ui', false);
   } catch (error) {
     console.error(error);
   }
+
 </script>
 
 <template>
@@ -30,28 +31,46 @@ import Login from './components/Login.vue';
 
   <v-main app>
     <v-container fluid>
-      <Login />
+      <Login v-if="ldReady" />
       <v-timeline>
           <TimeLineItem 
+            title="New UI"
+            :subtitle="newLogoEnabled ? `you're seeing the new UI` : `you're not seeing the new UI`"
+            dot-color="#A34FDE"
+            icon="mdi-new-box"
+            :error="!ldReady ? 'waiting for LaunchDarkly initialization' : ''"
+            :timelineIcon="newLogoEnabled ? 'mdi-checkbox-marked-circle' : 'mdi-close-circle-outline'"
+          />
+          <TimeLineItem 
+            title="Login"
+            :subtitle="loginEnabled ? `you've enabled the login feature` : `login is not enabled`"
+            dot-color="#405BFF"
+            icon="mdi-account-arrow-left"
+            :error="!ldReady ? 'waiting for LaunchDarkly initialization' : ''"
+            :timelineIcon="loginEnabled ? 'mdi-checkbox-marked-circle' : 'mdi-close-circle-outline'"
+          />
+          <TimeLineItem 
             title="LaunchDarkly"
-            subtitle="Is super-powering your features!"
+            :subtitle="ldReady ? 'super-powering your features!' : `isn't working yet`"
             image="./white-osmo.png"
             dot-color="#FF386B"
-            icon="mdi-checkbox-marked-circle"
+            icon="mdi-emoticon-sad"
+            :error="!ldReady ? `LaunchDarkly initialization failed` : ''"
+            :timelineIcon="ldReady ? 'mdi-checkbox-marked-circle' : 'mdi-alert-octagram'"
           />
           <TimeLineItem 
             title="Vue 3"
-            subtitle="Is running your app!"
+            subtitle="running your app!"
             image="./logo.svg"
             dot-color="#A34FDE"
-            icon="mdi-checkbox-marked-circle"
+            timelineIcon="mdi-checkbox-marked-circle"
           />
           <TimeLineItem 
             title="Vite"
-            subtitle="Successfully built your app!"
+            subtitle="built your app!"
             image="https://vitejs.dev/logo.svg"
             dot-color="#405BFF"
-            icon="mdi-checkbox-marked-circle"
+            timelineIcon="mdi-checkbox-marked-circle"
           />
       </v-timeline>
     </v-container>

@@ -48,20 +48,19 @@ const clearUser = async () => {
 </script>
 
 <template>
-  <!-- <div class="login" v-show="loginEnabled" >
-    <input v-model="form.username" placeholder="enter your username" /><button @click="login">Login</button><button @click="clearUser">Clear User</button>
-    <p>{{username === 'anonymous' ? 'You are anonymous' : `You are logged in as ${username}`}} </p>
-  </div> -->
   <v-card
     class="overflow-auto mx-auto"
     v-show="loginEnabled"
   >
     <v-banner
       sticky="sticky"
-      icon="mdi-account-circle"
+      icon="mdi-duck"
       color="#3DD6F5"
+      density="compact"
+      elevation="24"
+      rounded="true"
     >
-        <template v-slot:text lines="three">
+        <template v-slot:text>
             <p>{{username === 'anonymous' ? 'You are anonymous, login to see new features!' : `You are logged in as ${username}`}} </p>
         </template>
 
