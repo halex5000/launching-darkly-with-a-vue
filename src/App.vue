@@ -41,7 +41,7 @@
       </div>
     </v-container>
     <v-container fluid>
-      <Login v-if="ldReady" />
+      <Login v-if="loginEnabled" />
       <v-progress-linear
         class="d-flex justify-center align-center w-100"
         v-if="newLogoEnabled"
