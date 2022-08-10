@@ -59,8 +59,7 @@ Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app
 
   <details><summary>Click here to see how</summary>
 
-
-   ![](/Users/ahardman/development/launching-darkly-with-a-vue/public/retrieve-client-id-without-save.gif)
+   ![](./public/retrieve-client-id-without-save.gif)
   </details>
 
 - :hand: Manual way 
