@@ -14,7 +14,7 @@ If you want to get right to building and get things working :fast_forward: [jump
 
 ## The backstory
 
-Admittedly, I thrashed a little early on. I was looking for easy solutions for building, bundling, deployment, and component libraries. I'm not much of a designer and I love when I can find tools that accelerate and abstract away problems so I can focus on what I really want to build.
+Admittedly, I thrashed a little early on. I was looking for easy solutions for building, bundling, deployment, and component libraries. I'm not much of a designer and I love when I can find tools that accelerate and abstract away problems so I can focus on what I really want to build. Here's the story of where I landed and why:
 
 
 
@@ -51,7 +51,7 @@ I won't try to espouse the benefits of Vue, but here are some of the things that
 
 - [Conditional Rendering](https://vuejs.org/guide/essentials/conditional.html)
 
-  - Learning about Vue's rules about conditional rendering was incredibly powerful because learning the difference between the different directives was totally worth it. #themoreyouknow
+  - Learning about Vue's rules about conditional rendering was incredibly powerful because learning the difference between the different directives was totally worth it. :star2: #themoreyouknow
     - `v-if`
     - `v-else`
     - `v-show`
