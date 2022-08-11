@@ -41,6 +41,7 @@
       </div>
     </v-container>
     <v-container fluid>
+        <!-- v-if determines if a component will render or not and here, we're evaluating the flag, loginEnabled -->
       <Login v-if="loginEnabled" />
       <v-progress-linear
         class="d-flex justify-center align-center w-100"
@@ -76,6 +77,12 @@
             :error="!loginEnabled ? 'waiting for login to be enabled' : ''"
             :timelineIcon="loginEnabled ? 'mdi-checkbox-marked-circle' : 'mdi-close-circle-outline'"
           />
+          <!--
+						In our app, the timeline shows your progress through the setup
+						and in this case, we've kept it super simple and only used boolean flags
+						but, feature flags in LaunchDarkly can be SO much more than just boolean values
+						imagine not having to change your code when you change the messaging, styling, or icons!
+					-->
           <TimeLineItem 
             title="LaunchDarkly"
             :subtitle="ldReady ? 'super-powering your features!' : `isn't working yet`"
@@ -85,6 +92,11 @@
             :error="!ldReady ? `LaunchDarkly initialization failed, check your environment` : ''"
             :timelineIcon="ldReady ? 'mdi-checkbox-marked-circle' : 'mdi-alert-octagram'"
           />
+          <!--
+						In the above, note the use of `:` for binding to attributes where we're using an expression
+						in these expressions we're using the truthiness of ldReady to indicate, on the timeline,
+						if things are working as expected or not
+					-->
           <TimeLineItem 
             title="Vue 3"
             subtitle="running your app!"

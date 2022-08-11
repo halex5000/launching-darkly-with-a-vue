@@ -235,6 +235,10 @@ From here, we can enable our new feature and observe how our application changes
 
 Now that you've got a working Vue app and you're seeing features powered by LaunchDarkly, let's unpack a little of how LaunchDarkly's Vue SDK works with Vue.
 
+
+
+### In the beginning
+
 First, in our app, we initialize the LaunchDarkly client using [Vue's Plugin system](https://vuejs.org/guide/reusability/plugins.html) when our app starts up. You can find this code in `src/main.js`, but here's how it works:
 
 ```javascript
@@ -285,6 +289,8 @@ app.mount('#app')
 
 
 
+### Composing our masterpiece
+
 Next, let's peek into the app and see how the SDK works with Vue to surface flags and tell the app when it's ready.
 We're using [Vue's Composables](https://vuejs.org/guide/reusability/composables.html#what-is-a-composable) pattern to track the state of the LaunchDarkly client as well as flag values.
 
@@ -294,14 +300,16 @@ source: https://vuejs.org/guide/reusability/composables.html#what-is-a-composabl
 
 The SDK handles communicating with LaunchDarkly APIs, retries, error handling, and encapsulates the state management and caching for you, all you have to do is use the `use` functions to hook into this. 
 
-Check this out:
+Check this out these samples from `src/App.vue` to see how we use our composables from the SDK to make integrating the flags into our code so simple:
+
+#### You're so... reactive
 
 ```vue
 <!-- abrdiged version of src/App.vue setup script for illustration purposes -->
 <script setup>
   import { ref } from 'vue';
   // these MUST be used in a `setup` script, otherwise they won't work
-  // I learned this the hard way for you
+  // I learned this the hard way for you, you're welcome
   import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk';
   // by default, nothing is ready or enabled
   // ref() lets us define a variable as reactive so Vue can respond to changes in the value
@@ -330,8 +338,10 @@ Check this out:
 
 
 
+#### When it's time to change
+
 ```vue
-<!-- abrdiged version of src/App.vue template for illustration purposes -->
+<!-- abridged version of src/App.vue template for illustration purposes -->
 <template>
   <v-app>  
     <v-app-bar app>
@@ -346,6 +356,12 @@ Check this out:
         <Login v-if="loginEnabled" />
         
       	<v-timeline>
+          <!--
+						In our app, the timeline shows your progress through the setup
+						and in this case, we've kept it super simple and only used boolean flags
+						but, feature flags in LaunchDarkly can be SO much more than just boolean values
+						imagine not having to change your code when you change the messaging, styling, or icons!
+					-->
           <TimeLineItem 
             title="LaunchDarkly"
             :subtitle="ldReady ? 'super-powering your features!' : `isn't working yet`"
@@ -355,11 +371,112 @@ Check this out:
             :error="!ldReady ? `LaunchDarkly initialization failed, check your environment` : ''"
             :timelineIcon="ldReady ? 'mdi-checkbox-marked-circle' : 'mdi-alert-octagram'"
           />
+          <!--
+						In the above, note the use of `:` for binding to attributes where we're using an expression
+						in these expressions we're using the truthiness of ldReady to indicate, on the timeline,
+						if things are working as expected or not
+					-->
   			</v-timeline>
   	</v-container>
   </v-main>
 </template>
 ```
+
+
+
+#### New app, who this?
+
+```vue
+<!-- abridged version of src/components/Login.vue for illustration purposes -->
+
+<!-- remember to use the SDK composabled within a setup block! -->
+<script setup>
+  import { useLDFlag, useLDClient } from 'launchdarkly-vue-client-sdk'
+  import { ref } from 'vue'
+
+  // how we consume flags using the use composable in Vue
+  const loginEnabled = useLDFlag('login', false);
+  
+  // this is how we'll interact with the LaunchDarkly client directly
+  // also needs to be in the setup block
+  // we'll use this to identify the user once they login
+  const client = useLDClient();
+
+  // make the username a reactive element so Vue can update elements using this
+  let username = ref('anonymous');
+
+  let showLoginDialog = ref(false);
+
+  // capture the state in an object so we don't update the actual username until
+  // the user clicks login
+  const form = {};
+
+  // set the username when the user clicks login
+  const login = async () => {
+      if (form.username) {
+          username.value = form.username;
+          form.username = '';
+        
+        	// asks the LaunchDarkly client for the current user info
+          const user = client.getUser();
+        
+          console.log('current user is', client.getUser());
+
+        	// here's where update the user's identity in the LaunchDarkly client
+					await client.identify({
+            	// keep anything else we already attributed to the user
+              ...user, 
+            	// update the key, the unique identifier for this user
+            	// to be their username
+            	// we use .value to access the value because as a reactive object
+            	// we interact with Vue's proxy for the object
+            	// learn more here: https://vuejs.org/guide/essentials/reactivity-fundamentals.html
+              key: username.value,
+          });
+
+          console.log('current user is', client.getUser());
+
+          showLoginDialog.value = false;
+      }
+  }
+	
+	// clear the user when they click Clear User
+  // return them to being anonymous
+  const clearUser = async () => {
+    	// just like we used identify above to identify the user
+    	// so we can use it again to make them anonymous
+    	// this time, we don't indicate a user key because the client will use a UUID instead
+      await client.identify({
+          anonymous: true,
+      });
+      username.value = 'anonymous';
+  }
+</script>
+
+<template>
+	<!-- the card containing the login components -->
+  <v-card
+    v-show="loginEnabled"
+  >
+		<!-- 
+			instead of using v-if, we're using v-show, so the element is rendered
+			but not visible, Vue just changes the display property, but the element is in the DOM
+		-->
+  </v-card>
+</template>
+```
+
+
+
+## :dash: And Just Like That
+
+You've seen how easy it is to build LaunchDarkly's Vue SDK into your Vue app. 
+
+You got use feature flags to supercharge your delivery by decoupling your release of features from deployment of your app.
+
+You got to see first-hand how you can choose who sees what features either turning them on for an entire userbase or releasing to a single user at a time.
+
+Finally, you got to see the :zap: lightning fast :zap: response time from LaunchDarkly's Flag Delivery Network where the changes to your flags are propagated around the world in milliseconds.
 
 
 
