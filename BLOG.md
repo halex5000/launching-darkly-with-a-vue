@@ -231,7 +231,139 @@ From here, we can enable our new feature and observe how our application changes
     
       
 
-# Congratulations, you're launching darkly with a Vue!
+## Congratulations, you're launching darkly with a Vue!
+
+Now that you've got a working Vue app and you're seeing features powered by LaunchDarkly, let's unpack a little of how LaunchDarkly's Vue SDK works with Vue.
+
+First, in our app, we initialize the LaunchDarkly client using [Vue's Plugin system](https://vuejs.org/guide/reusability/plugins.html) when our app starts up. You can find this code in `src/main.js`, but here's how it works:
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import { LDPlugin } from 'launchdarkly-vue-client-sdk'
+
+const app = createApp(App);
+
+// Vite puts the environment variables in this variable and to prevent leaking of environment variables not
+// meant for the client, they have to be prefixed with VITE 
+// or else Vite wouldn't add them to it's environment #yoursecretissafewithvite
+if (import.meta.env.VITE_CLIENT_ID) {
+  
+    /**
+  	if we know who the user was, we could add that information here
+  	but in ouur app, the user is anonymous at first, so we'll identify the user later
+  	if you want to read more about user attributes, check out these docs
+    @link https://launchdarkly.github.io/js-client-sdk/interfaces/_launchdarkly_js_client_sdk_.lduser.html
+  */
+  const user = {
+    // unique identifier for the users
+    // defaults to a UUID if you don't provide one and the user is anonymous
+    // otherwise, it's required
+    key: '',
+    // boolean indicating whether the user is anonymous or not
+    // defaults to true
+    anonymous: true,
+  }
+  
+  // we're telling the LaunchDarkly SDK the client ID with which it should retrieve flags
+  const clientSideID = import.meta.env.VITE_CLIENT_ID,
+  
+  // this didn't have to be a named variable, but I wanted to be extra clear about what I was doing here
+  // here are the docs about the plugin options: 
+  // https://launchdarkly.github.io/vue-client-sdk/index.html#LDPluginOptions
+  const launchDarklyPluginOptions = { 
+    clientSideID,
+    // user, // user is anonymous right now, so we won't pass anything
+  };
+  
+  // tell Vue to use our plugin
+  app.use(LDPlugin, launchDarklyPluginOptions)
+}
+
+app.mount('#app')
+```
+
+
+
+Next, let's peek into the app and see how the SDK works with Vue to surface flags and tell the app when it's ready.
+We're using [Vue's Composables](https://vuejs.org/guide/reusability/composables.html#what-is-a-composable) pattern to track the state of the LaunchDarkly client as well as flag values.
+
+> In the context of Vue applications, a "composable" is a function that leverages Vue's Composition API to encapsulate and reuse **stateful logic**.
+
+source: https://vuejs.org/guide/reusability/composables.html#what-is-a-composable
+
+The SDK handles communicating with LaunchDarkly APIs, retries, error handling, and encapsulates the state management and caching for you, all you have to do is use the `use` functions to hook into this. 
+
+Check this out:
+
+```vue
+<!-- abrdiged version of src/App.vue setup script for illustration purposes -->
+<script setup>
+  import { ref } from 'vue';
+  // these MUST be used in a `setup` script, otherwise they won't work
+  // I learned this the hard way for you
+  import { useLDReady, useLDFlag } from 'launchdarkly-vue-client-sdk';
+  // by default, nothing is ready or enabled
+  // ref() lets us define a variable as reactive so Vue can respond to changes in the value
+  let ldReady = ref(false);
+  let loginEnabled = ref(false);
+  let newLogoEnabled = ref(false);
+  
+  try {
+    // useLDReady returns a reactive boolean variable
+    // indicating whether the client is ready to use
+    // it does throw an error if the client ID, so I wrapped in a try/catch here
+    ldReady = useLDReady();
+    
+    // useLDFlag accepts the name of the flag to evaluate
+    // and a default value
+    // so at first evaluation you can have a value regardless of the latency in your connection
+    // here, we've defaulted to false
+    // in a strongly typed environment, useLDFlag will infer the type from the default value
+    loginEnabled = useLDFlag('login', false);
+    newLogoEnabled = useLDFlag('new-ui', false);
+  } catch (error) {
+    console.error(error);
+  }
+</script>
+```
+
+
+
+```vue
+<!-- abrdiged version of src/App.vue template for illustration purposes -->
+<template>
+  <v-app>  
+    <v-app-bar app>
+      <div class="d-flex justify-center align-center w-100">
+        <h1>Launching Darkly with a Vue</h1>
+      </div>
+    </v-app-bar>
+
+    <v-main app class="w-100">
+      <v-container fluid>
+        <!-- v-if determines if a component will render or not and here, we're evaluating the flag, loginEnabled -->
+        <Login v-if="loginEnabled" />
+        
+      	<v-timeline>
+          <TimeLineItem 
+            title="LaunchDarkly"
+            :subtitle="ldReady ? 'super-powering your features!' : `isn't working yet`"
+            image="./white-osmo.png"
+            dot-color="#FF386B"
+            :icon="ldReady ? '' : mdi-emoticon-sad"
+            :error="!ldReady ? `LaunchDarkly initialization failed, check your environment` : ''"
+            :timelineIcon="ldReady ? 'mdi-checkbox-marked-circle' : 'mdi-alert-octagram'"
+          />
+  			</v-timeline>
+  	</v-container>
+  </v-main>
+</template>
+```
+
+
+
+## More to come
 
 Stay tuned, there is more to come with our Vue SDK, but in the meantime, here are some things to fuel your feature flagging journey
 
