@@ -13,15 +13,7 @@ If you found this repo on your own, checkout this blog post to read more about t
 
 ## Getting Started
 
-<style>
-  img.icon {
-    // in case we need to do some styling
-  }
-</style>
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-### <span class="material-icons">warning</span> **Setup**
+### :gear: **Setup**
 If you don't already have a LaunchDarkly account, sign up for a [free trial of LaunchDarkly](https://app.launchdarkly.com/signup) to explore creating Feature Flags and targeting users with changes. It's fast, easy, and there's no obligation to continue.
 
 
