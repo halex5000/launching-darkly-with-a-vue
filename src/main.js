@@ -28,7 +28,7 @@ if (import.meta.env.VITE_CLIENT_ID) {
   }
   
   // we're telling the LaunchDarkly SDK the client ID with which it should retrieve flags
-  const clientSideID = import.meta.env.VITE_CLIENT_ID,
+  const clientSideID = import.meta.env.VITE_CLIENT_ID;
   
   // this didn't have to be a named variable, but I wanted to be extra clear about what I was doing here
   // here are the docs about the plugin options: 
