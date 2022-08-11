@@ -46,7 +46,7 @@ Create the following feature flags within LaunchDarkly
     ![](./public/create-new-ui-flag.gif)
     </details>
 
-###  **Secret time**
+###  :shushing_face: **Secret time**
 
 Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app.launchdarkly.com/)
 
@@ -72,7 +72,7 @@ Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app
 
   
 
-### **Step 4** :ship: with :flags:
+### :shipit: Shipping with Flags
 
 :world_map: Choose your own adventure
 
@@ -143,11 +143,11 @@ Get your LaunchDarkly Client-Side ID from the [LaunchDarkly console](https://app
     </details>
 ​      
 
-## :champagne: Let's pop some flags :champagne:
+### :champagne: Let's pop some flags
 
 
 
-:rocket: If you've set everything up, you should be ready to roll! :rocket:
+If you've set everything up, you should be ready to roll!
 
 From here, we can enable our new feature and observe how our application changes based on a new feature being rolled out. 
 
@@ -177,7 +177,7 @@ Now that you've got a working Vue app and you're seeing features powered by Laun
 
 
 
-### In the beginning
+### :new: In the beginning
 
 First, in our app, we initialize the LaunchDarkly client using [Vue's Plugin system](https://vuejs.org/guide/reusability/plugins.html) when our app starts up. 
 You can find this code in `src/main.js`, but here's how it works:
@@ -201,14 +201,14 @@ if (import.meta.env.VITE_CLIENT_ID) {
 
 app.mount('#app')
 ```
-Let's unpack what's going on up there :arrow_up:
+:incoming_envelope: Let's unpack what's going on up there :arrow_up:
 - our client ID is in our environment and Vite will only include an environment variable if it is prefixed with VITE which tells Vite that this is an environment variable intended for the client.
 - there are a lot of things you can include in LaunchDarkly Plugin Options, but we only need the `clientSideID` for this example
   - [read more here](https://launchdarkly.github.io/vue-client-sdk/index.html#LDPluginOptions)
   - if we knew the user now, we could include it, but our user hasn't authenticated yet, so they're anonymous by default
   - the LaunchDarkly client will assign the user a UUID if they're anonymous and we don't assign a key for this user.
 
-### Composing our masterpiece :metal:
+### :metal: Composing our masterpiece 
 
 
 Let's peek into the app code and see how the SDK works with Vue to surface flags and tell the app when it's ready.
@@ -223,7 +223,7 @@ The SDK handles communicating with LaunchDarkly APIs, retries, error handling, a
 
 Check this out these samples from `src/App.vue` to see how we use our composables from the SDK to make integrating the flags into our code so simple
 
-#### You're so... reactive
+#### :radioactive: You're so... reactive
 
 :bulb: - <small>the code is also commented with the following notes</small> 
 
@@ -245,15 +245,15 @@ Check this out these samples from `src/App.vue` to see how we use our composable
   }
 </script>
 ```
-Let's unpack what's going on up there :arrow_up:
+:incoming_envelope: Let's unpack what's going on up there :arrow_up:
 - the composables, those functions prefixed with `use` need to be in the `setup block` and more importantly, they have to run at `setup` time. I learned this the hard way because I had a `use` in the setup block, but it wasn't executed until later and that errored out because the client was not initializing when I ran the function later.
 - `useLDReady` is a function which allows you to react to whether the LaunchDarkly client is ready to use or not and returns you a `reactive` object so Vue can observe changes to it's value.
 - `useLDFlag` is a function which allows you to evaluate a LaunchDarkly feature flag and returns you a `reactive` object so Vue can observe changes to it's value.
 
 
 
-#### When it's time to change
-<small>You've got to rearrange</small>
+#### :atom: When it's time to change
+<small>You've got to rearrange (your components)</small> 
 
 ```vue
 <!-- abridged version of src/App.vue template for illustration purposes -->
@@ -284,7 +284,7 @@ Let's unpack what's going on up there :arrow_up:
   </v-main>
 </template>
 ```
-Let's unpack what's going on up there :arrow_up:
+:incoming_envelope: Let's unpack what's going on up there :arrow_up:
 -  `v-if` is a Vue directive that affects whether an element renders or not. In this case, we're using the reactive object, `loginEnabled`, to decide whether we render that component or not.
 
 -  we kept it super simple and only used `Boolean` flags, but feature flags with LaunchDarkly can be **soooooo** much more.
@@ -297,7 +297,7 @@ Let's unpack what's going on up there :arrow_up:
 
    :star: Imagine the power of not having to redeploy your app to change the experience, iconography, or language you display to your user
 
-#### New app, who this?
+#### :disguised_face: New app, who this?
 
 Identifying your user unlocks loads of potential for your feature management and the best part is that even if you don't know who your user is up front, you can update the LaunchDarkly client anytime when you get more information about your user.
 ```vue
@@ -352,7 +352,7 @@ Identifying your user unlocks loads of potential for your feature management and
   </v-card>
 </template>
 ```
-What to pick up on in the above:
+📨 Let's unpack what's going on up there ⬆️
 - How we identified the user in the example above:
   - `useLDClient` - just like the other composables, this **must** be run in the `setup` block
   - `identify` - a function on the client for providing the user data to assist the SDK in the flag evaluation when targeting users
