@@ -476,7 +476,7 @@ You got use feature flags to supercharge your delivery by decoupling your releas
 
 You got to see first-hand how you can choose who sees what features either turning them on for an entire userbase or releasing to a single user at a time.
 
-Finally, you got to see the :zap: lightning fast :zap: response time from LaunchDarkly's Flag Delivery Network where the changes to your flags are propagated around the world in milliseconds.
+Finally, you got to see the :zap: lightning fast :zap: response time from [LaunchDarkly's Flag Delivery Network](https://launchdarkly.com/blog/flag-delivery-at-edge/) where the changes to your flags are propagated around the world in milliseconds.
 
 
 
